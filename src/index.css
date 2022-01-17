@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+*::-webkit-scrollbar{
+  width: 5px;
+  scrollbar-color: #FFFFFF;     /* «цвет ползунка» «цвет полосы скроллбара» */
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #1976D2;
+}
+
+header, footer {
+  z-index: 999;
+}
