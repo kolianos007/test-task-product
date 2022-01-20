@@ -1,12 +1,15 @@
-import { Box, Button, ButtonGroup, Skeleton, Tab } from "@mui/material";
+import { Box, Button, ButtonGroup, Tab } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import React, { FC } from "react";
+import React, { FC, useRef } from "react";
 import { List } from "../components";
 import { useSelector } from "react-redux";
 import { AppStateType } from "../store/reducers/index";
 import { useLocation } from "react-router-dom";
+import useLocalStorage from "../hooks/useLocalStorage";
+
+const numberOfProducts = [8, 16, "All products"];
 
 const Products: FC = () => {
   const tabs = [{ name: "Products" }, { name: "Created Products" }];
@@ -21,10 +24,13 @@ const Products: FC = () => {
     }
   );
   const location = useLocation();
+  const [amountProd, setAmountProd] = useLocalStorage("amountProduct", 8);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+
+  const onButtonHandler = () => {};
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
       <TabContext value={value}>
@@ -52,9 +58,19 @@ const Products: FC = () => {
                   zIndex: 9999,
                 }}
               >
-                <Button>8</Button>
-                <Button>16</Button>
-                <Button>All products</Button>
+                {numberOfProducts.map((number, i) => (
+                  <Button
+                    style={
+                      (+amountProd || amountProd) === number
+                        ? { background: "red" }
+                        : {}
+                    }
+                    key={number}
+                    onClick={() => setAmountProd(numberOfProducts[i])}
+                  >
+                    {number}
+                  </Button>
+                ))}
               </ButtonGroup>
             </>
           ) : null}
